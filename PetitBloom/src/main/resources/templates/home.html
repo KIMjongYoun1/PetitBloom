@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
+<style>
+/* styles.css */
+:root {
+	--primary-color: #4CAF50;
+	--secondary-color: #FFFFFF;
+	--text-color: #333333;
+	--background-color: #F9F9F9;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+header {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	padding: 1rem;
+	text-align: center;
+}
+
+header h1 {
+	margin: 0;
+	font-size: 2rem;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	margin: 0.5rem 0 0;
+}
+
+nav ul li {
+	margin: 0 1rem;
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: var(--secondary-color);
+	font-weight: bold;
+}
+
+main {
+	padding: 2rem;
+}
+
+main section {
+	margin-bottom: 2rem;
+}
+
+.garden-placeholder {
+	margin: 1rem 0;
+	padding: 2rem;
+	background-color: #E8F5E9;
+	border: 2px dashed var(--primary-color);
+	text-align: center;
+}
+
+button {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #45A049;
+}
+
+footer {
+	text-align: center;
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+</style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PetitBloom</title>
+
+</head>
+<body>
+	<!-- 헤더 -->
+	<header>
+		<!-- 로그인 버튼 -->
+		<a href="/login">
+			<button>로그인</button>
+		</a>
+
+		<!-- 회원가입 버튼 -->
+		<a href="/signup">
+		
+			<button>회원가입</button>
+		</a>
+
+			<h1>PetitBloom</h1>
+
+			<nav>
+				<ul>
+					<li><a href="/home">Home</a></li>
+					<li><a href="/garden">Digital Garden</a></li>
+					<li><a href="/profile">Profile</a></li>
+				</ul>
+			</nav>
+	</header>
+
+	<!-- 메인 컨텐츠 -->
+	<main>
+		<section id="home">
+			<h2>Welcome to PetitBloom</h2>
+			<p>Start growing your digital garden by sharing your creations!</p>
+			<button>Get Started</button>
+		</section>
+
+		<section id="garden">
+			<h2>Your Digital Garden</h2>
+			<p>Here, you'll see your creations come to life as a beautiful
+				garden.</p>
+			<!-- 정원 시각화 예시 -->
+			<div class="garden-placeholder">🌱 Your garden grows here!</div>
+		</section>
+
+		<section id="profile">
+			<h2>Profile</h2>
+			<p>Manage your account and view your achievements here.</p>
+		</section>
+	</main>
+
+	<!-- 푸터 -->
+	<footer>
+		<p>© 2024 PetitBloom. All Rights Reserved.</p>
+	</footer>
+</body>
+
+
+</html>

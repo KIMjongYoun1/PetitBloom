@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="mainVO" type="PetitBloom.bean.mainVO"></typeAlias>
+		<typeAlias alias="ProfileVO" type="PetitBloom.bean.ProfileVO"></typeAlias>
+		<typeAlias alias="GardenVO" type="PetitBloom.bean.GardenVO"></typeAlias>
+		<!-- 절대적으로 한줄안에 다써야함  -->
+	</typeAliases>
+</configuration>

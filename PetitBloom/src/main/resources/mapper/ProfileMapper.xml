@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PetitBloom.mapper.ProfileMapper">
+    <!-- 사용자 ID로 사용자 정보를 조회 -->
+    <select id="getUserById" resultType="PetitBloom.bean.ProfileVO">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+
+    <!-- 새 사용자 등록 -->
+    <insert id="insertUser" parameterType="PetitBloom.bean.ProfileVO">
+        INSERT INTO users (id, username, email, password)
+        VALUES (#{id}, #{username}, #{email}, #{password})
+    </insert>
+</mapper>
