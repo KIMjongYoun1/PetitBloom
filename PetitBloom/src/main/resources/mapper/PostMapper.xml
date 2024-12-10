@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PetitBloom.mapper.PostDAO">
+
+    <!-- 게시글 ID로 게시글 조회 -->
+    <select id="findPostById" resultType="PetitBloom.bean.PostVO">
+        SELECT 
+            id AS id, 
+            user_id AS userId, 
+            title AS title, 
+            content AS content, 
+            image_url AS imageUrl, 
+            created_at AS createdAt, 
+            updated_at AS updatedAt
+        FROM posts 
+        WHERE id = #{id}
+    </select>
+
+    <!-- 사용자 ID로 게시글 목록을 조회 -->
+    <select id="findPostsByUserId" resultType="PetitBloom.bean.PostVO">
+        SELECT 
+            id AS id, 
+            user_id AS userId, 
+            title AS title, 
+            content AS content, 
+            image_url AS imageUrl, 
+            created_at AS createdAt, 
+            updated_at AS updatedAt
+        FROM posts 
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 게시글 저장 -->
+    <insert id="savePost" parameterType="PetitBloom.bean.PostVO">
+        INSERT INTO posts (user_id, title, content, image_url, created_at, updated_at)
+        VALUES (#{userId}, #{title}, #{content}, #{imageUrl}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="updatePost" parameterType="PetitBloom.bean.PostVO">
+        UPDATE posts 
+        SET title = #{title}, content = #{content}, image_url = #{imageUrl}, updated_at = #{updatedAt}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deletePost" parameterType="Long">
+        DELETE FROM posts WHERE id = #{id}
+    </delete>
+
+</mapper>
