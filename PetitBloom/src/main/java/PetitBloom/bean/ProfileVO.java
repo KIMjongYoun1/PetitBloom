@@ -1,5 +1,8 @@
 package PetitBloom.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -11,6 +14,7 @@ public class ProfileVO {
     private String password;    // 비밀번호
     private String createdAt;   // 계정 생성 일시
     private String profileImageUrl; // 프로필 이미지 URL (선택 사항)
-    private int followersCount; // 팔로워 수 (선택 사항)
-    private int followingCount; // 팔로잉 수 (선택 사항)
+    private List<PostVO> posts = new ArrayList<>(); // 사용자의 게시글 목록
+    private int postCount;      // 작성한 게시글 수
+    private Long totalLikes;    // 총 좋아요 수
 }

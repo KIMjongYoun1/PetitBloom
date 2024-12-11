@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PetitBloom.mapper.GardenDAO">
+
+
+	<!-- 모든 게시글 조회 -->
+	<select id="findAllPosts" resultType="PetitBloom.bean.GardenVO">
+		SELECT
+		p.id AS id,
+		p.user_id AS userId,
+		p.title AS title,
+		p.content AS content,
+		p.image_url AS imageUrl,
+		p.thumbnail AS thumbnail,
+		p.like_count AS likeCount,
+		EXISTS (
+		SELECT 1
+		FROM post_likes pl
+		WHERE pl.user_id = #{userId} AND pl.post_id = p.id
+		) AS likedByUser
+		FROM posts p;
+	</select>
+
+	<!-- 좋아요 추가 -->
+	<insert id="addLike" parameterType="map">
+		INSERT INTO post_likes (user_id, post_id)
+		VALUES (#{userId}, #{postId})
+	</insert>
+
+	<!-- 좋아요 삭제 -->
+	<delete id="removeLike" parameterType="map">
+		DELETE FROM post_likes
+		WHERE user_id = #{userId} AND post_id = #{postId}
+	</delete>
+
+	<!-- 사용자가 특정 게시글에 좋아요를 눌렀는지 확인 -->
+	<select id="checkLike" resultType="boolean">
+		SELECT EXISTS (
+		SELECT 1 FROM post_likes
+		WHERE user_id = #{userId} AND post_id = #{postId}
+		LIMIT 1
+		)
+	</select>
+
+	<!-- 게시글의 좋아요 수 증가 -->
+	<update id="increaseLikeCount" parameterType="Long">
+		UPDATE posts
+		SET like_count = like_count + 1
+		WHERE id = #{postId}
+	</update>
+
+	<!-- 게시글의 좋아요 수 감소 -->
+	<update id="decreaseLikeCount" parameterType="Long">
+		UPDATE posts
+		SET like_count = like_count - 1
+		WHERE id = #{postId}
+	</update>
+
+</mapper>

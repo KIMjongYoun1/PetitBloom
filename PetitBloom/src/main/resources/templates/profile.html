@@ -2,57 +2,59 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <style>
-        .profile-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile</title>
+<style>
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .profile-header img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+.profile-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
 
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
 
-        .post-tile img {
-            width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-        }
+.post-tile img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+}
 
-        .edit-profile-form input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-        }
+.edit-profile-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
 
-        .button-container {
-            margin-top: 20px;
-        }
+.button-container {
+    margin-top: 20px;
+}
 
-        .button-container a {
-            margin-right: 10px;
-        }
-    </style>
+.button-container a {
+    margin-right: 10px;
+}
+</style>
 </head>
 <body>
     <!-- 프로필 헤더 -->
     <div class="profile-header">
-        <img th:src="${user?.profileImageUrl ?: '/images/default-profile.jpg'}" alt="Profile Image">
+        <img
+            th:src="${user?.profileImageUrl ?: '/images/default-profile.jpg'}"
+            alt="Profile Image">
         <h1 th:text="${user?.username ?: 'Guest'}">Username</h1>
     </div>
 
@@ -60,13 +62,13 @@
     <div th:if="${editMode}">
         <h2>Edit Profile</h2>
         <form action="/profile" method="POST" class="edit-profile-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" th:value="${user?.username ?: ''}" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" th:value="${user?.email ?: ''}" required>
-
-            <label for="password">Password:</label>
+            <label for="username">Username:</label> 
+            <input type="text" id="username" name="username" th:value="${user?.username ?: ''}" required> 
+            
+            <label for="email">Email:</label> 
+            <input type="email" id="email" name="email" th:value="${user?.email ?: ''}" required> 
+            
+            <label for="password">Password:</label> 
             <input type="password" id="password" name="password" placeholder="Enter new password">
 
             <button type="submit">Save Changes</button>
@@ -83,17 +85,25 @@
 
         <!-- 게시글 목록 -->
         <h2>Your Posts</h2>
-        <a href="/posts/new"><button>Create New Post</button></a>
+        <a href="/post/new"><button>Create New Post</button></a>
         <div class="posts-grid">
             <div th:each="post : ${posts}" class="post-tile">
-                <a th:href="@{'/posts/' + ${post.id}}"><img th:src="${post.imageUrl}" alt="Post Image"></a>
+                <a th:href="@{'/post/' + ${post.id}}"><img
+                    th:src="${post.thumbnail != null ? post.thumbnail : '/images/default-thumbnail.jpg'}"
+                    alt="Post Thumbnail"></a>
+              
+                    <!-- 좋아요 개수 표시 -->
+                <p>Likes: <span th:text="${post.likeCount}">0</span></p>
+                
                 <div>
-                    <a th:href="@{'/posts/' + ${post.id} + '/edit'}"><button>Edit</button></a>
-                    <form th:action="@{'/posts/' + ${post.id} + '/delete'}" method="post" style="display: inline;">
+                    <a th:href="@{'/post/' + ${post.id} + '/edit'}"><button>Edit</button></a>
+                    <form th:action="@{'/post/' + ${post.id} + '/delete'}"
+                        method="post" style="display: inline;">
                         <button type="submit">Delete</button>
                     </form>
-                </div>
-            </div>
+                
+                
+            
         </div>
 
         <!-- 프로필 수정 버튼 -->
@@ -102,7 +112,7 @@
 
     <!-- 버튼 영역 -->
     <div class="button-container">
-        <a href="/"><button>Home</button></a>
+        <a href="/"><button>Home</button></a> 
         <a href="/logout"><button>Logout</button></a>
     </div>
 </body>

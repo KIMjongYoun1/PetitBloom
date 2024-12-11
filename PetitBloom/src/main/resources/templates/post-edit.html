@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Post</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ 
 </head>
 <body>
     <h1>Edit Post</h1>
 
     <!-- 게시글 수정 폼 -->
-    <form id="editPostForm">
+    <form id="editPostForm" enctype="multipart/form-data">
         <input type="hidden" id="postId" name="id" th:value="${post.id}"> <!-- 게시글 ID 숨김 필드 -->
 
         <label for="title">Title:</label>
@@ -19,8 +20,17 @@
         <label for="content">Content:</label>
         <textarea id="content" name="content" required th:text="${post.content}"></textarea><br><br>
 
-        <label for="imageUrl">Image URL (optional):</label>
-        <input type="text" id="imageUrl" name="imageUrl" th:value="${post.imageUrl}"><br><br>
+        <!-- 기존 썸네일 표시 -->
+        <div>
+            <label>Current Thumbnail:</label><br>
+            <img id="currentThumbnail" src="${post.thumbnail}" alt="Current Thumbnail" style="max-width: 200px; max-height: 200px;"><br><br>
+        </div>
+
+        <!-- 새 이미지 업로드 -->
+        <div>
+            <label for="image">Upload New Image (Optional):</label>
+            <input type="file" id="image" name="image" accept="image/*"><br><br>
+        </div>
 
         <button type="submit">Update Post</button>
     </form>
@@ -34,26 +44,51 @@
             $("#editPostForm").submit(function(event){
                 event.preventDefault();  // 폼 제출 기본 동작 방지
 
-                var formData = {
-                    id: $("#postId").val(),
-                    title: $("#title").val(),
-                    content: $("#content").val(),
-                    imageUrl: $("#imageUrl").val()
-                };
+                var formData = new FormData();  // FormData 객체 생성
+                formData.append("id", $("#postId").val());
+                formData.append("title", $("#title").val());
+                formData.append("content", $("#content").val());
+
+                // 파일 추가
+                if ($("#image")[0].files[0]) {
+                    formData.append("image", $("#image")[0].files[0]);
+                }
 
                 $.ajax({
                     type: "POST",
-                    url: "/posts/" + $("#postId").val() + "/edit",  // 게시글 수정 URL
+                    url: "/post/" + $("#postId").val() + "/edit",  // 게시글 수정 URL
                     data: formData,  // 폼 데이터 전송
+                    processData: false,  // FormData 사용 시 필수
+                    contentType: false,  // FormData 사용 시 필수
                     success: function(response){
-                        // 성공 시, 게시글 목록 갱신
                         alert("Post updated successfully!");
-                        window.location.href = "/posts";  // 게시글 목록 페이지로 리다이렉트
+                        window.location.href = "/profile";  // 프로 목록 페이지로 리다이렉트
                     },
                     error: function(xhr, status, error){
                         $("#errorMessage").text("Error: " + xhr.responseText);  // 에러 처리
                     }
                 });
+            });
+         // 파일 입력 필드의 변경 이벤트 처리 (실시간 미리보기)
+            $("#image").on("change", function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    // MIME 타입 검사
+                    if (file.type.startsWith("image/")) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // 미리보기 이미지 설정
+                            $("#previewImage").attr("src", e.target.result);
+                            $("#preview").show(); // 미리보기 표시
+                        };
+                        reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+                    } else {
+                        alert("Please upload a valid image file.");
+                        event.target.value = ""; // 잘못된 파일은 초기화
+                        $("#preview").hide(); // 미리보기 숨기기
+                    }
+                }
             });
         });
     </script>

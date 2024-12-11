@@ -1,8 +1,12 @@
 package PetitBloom.Service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import PetitBloom.bean.PostVO;
 import PetitBloom.bean.ProfileVO;
+import PetitBloom.mapper.PostDAO;
 import PetitBloom.mapper.ProfileMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -11,10 +15,16 @@ import lombok.RequiredArgsConstructor;
 public class ProfileService {
 
 	private final ProfileMapper profileMapper;
+	private final PostDAO postDAO;
 
 	// 사용자 정보 조회
 	public ProfileVO getUserById(String id) {
 		return profileMapper.getUserById(id); // String 타입으로 처리
+	}
+
+	// 사용자 ID로 게시글 목록을 조회
+	public List<PostVO> getPostsByUser(String userId) {
+		return postDAO.findPostsByUserId(userId);
 	}
 
 	// 새 사용자 등록
@@ -31,6 +41,6 @@ public class ProfileService {
 		return null; // 비밀번호 불일치하거나 사용자가 없으면 null 반환
 	}
 
-
+	// Like
 
 }

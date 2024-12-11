@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${post.title}">Post Detail</title>
+</head>
+<body>
+
+<!-- 게시글 내용 -->
+<h1 th:text="${post.title}">Title</h1>
+<p th:text="${post.content}">Content</p>
+
+<!-- 작성자 및 날짜 -->
+<p>Written by: <span th:text="${post.userId}">User</span></p>
+<p>Created at: <span th:text="${post.createdAt}">Date</span></p>
+
+<!-- 썸네일 -->
+<img th:src="${post.thumbnail}" alt="Post Thumbnail" style="width: 300px; height: 300px;">
+
+<!-- 좋아요 표시 -->
+<p>Likes: <span th:text="${post.likeCount}">0</span></p>
+
+<!-- 수정, 삭제 버튼 (작성자만 보이도록 설정) -->
+<div th:if="${isAuthor}">
+    <a th:href="@{'/post/' + ${post.id} + '/edit'}"><button>Edit</button></a>
+    <form th:action="@{'/post/' + ${post.id} + '/delete'}" method="post" style="display: inline;">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+
+<!-- 뒤로가기 버튼 -->
+<a href="/profile"><button>Back to Profile</button></a>
+<a href="/garden"><button>Back to Garden</button></a>
+
+</body>
+</html>

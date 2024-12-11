@@ -29,17 +29,23 @@ public class ProfileController {
 
         if (user != null) {
             model.addAttribute("user", user);
-            model.addAttribute("editMode", editMode != null && editMode); // 수정 모드 여부
-            
+            model.addAttribute("editMode", editMode != null && editMode);
+
             // 사용자 게시글 가져오기
             try {
-                List<PostVO> posts = postService.getPostsByUser(user.getUserId()); // postService 인스턴스 메서드 호출
+                List<PostVO> posts = postService.getPostsByUser(user.getUserId());
+                // 기본 썸네일 설정
+                for (PostVO post : posts) {
+                    if (post.getThumbnail() == null || post.getThumbnail().isEmpty()) {
+                        post.setThumbnail("/uploads/default-thumbnail.jpg"); // 기본 이미지 경로 설정
+                    }
+                }
                 model.addAttribute("posts", posts); // 게시글 리스트 추가
             } catch (Exception e) {
                 e.printStackTrace();
                 model.addAttribute("error", "게시글을 불러오는 중 오류가 발생했습니다.");
             }
-            
+
             return "profile"; // profile.html 페이지 반환
         } else {
             return "redirect:/login"; // 로그인되지 않으면 로그인 페이지로 리다이렉트
