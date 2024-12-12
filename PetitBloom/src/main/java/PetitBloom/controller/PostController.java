@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import PetitBloom.Service.CommentService;
 import PetitBloom.Service.FileService;
 import PetitBloom.Service.PostService;
 import PetitBloom.bean.PostVO;
@@ -29,11 +30,13 @@ public class PostController {
 
 	private final PostService postService;
 	private final FileService fileService;
+	private final CommentService commentService;
 
 	@Autowired
-	public PostController(PostService postService, FileService fileService) {
+	public PostController(PostService postService, FileService fileService, CommentService commentService) {
 		this.postService = postService;
 		this.fileService = fileService;
+		this.commentService= commentService;
 
 	}
 
@@ -226,7 +229,7 @@ public class PostController {
 	    // 모델에 게시글과 작성자 여부 추가
 	    model.addAttribute("post", post);
 	    model.addAttribute("isAuthor", isAuthor); // 수정 및 삭제 권한 체크용
-
+	    model.addAttribute("comments", commentService.getCommentsByPostId(id)); // 댓글 리스트 추가model.addAttribute("comments", commentService.getCommentsByPostId(postId)); // 댓글 리스트 추가
 	    return "detail"; // detail.html로 이동 (상세 페이지)
 	}
 	
