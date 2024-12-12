@@ -41,6 +41,5 @@ public class ProfileService {
 		return null; // 비밀번호 불일치하거나 사용자가 없으면 null 반환
 	}
 
-	// Like
-
+	
 }

@@ -3,9 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title th:text="${post.title}">Post Detail</title>
+<title>PetitBloom</title>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+	crossorigin="anonymous"></script>
+<style>
+/* General styles */
+:root {
+	--primary-color: #6A5ACD; /* 보라색 (배너 색상) */
+	--secondary-color: #FFFFFF; /* 흰색 (텍스트, 버튼 배경) */
+	--text-color: #333333; /* 텍스트 색상 */
+	--background-color: #F9F9F9; /* 페이지 배경색 */
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+header {
+	background-color: var(--primary-color); /* 배너 배경색 보라색 */
+	color: var(--secondary-color);
+	padding: 2rem;
+	text-align: center;
+}
+
+header h1 {
+	font-size: 3rem;
+	margin: 0;
+}
+
+header p {
+	font-size: 1.2rem;
+	margin-top: 0.5rem;
+}
+
+main {
+	padding: 2rem;
+}
+
+.section {
+	margin-bottom: 3rem;
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.card {
+	background: var(--secondary-color);
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.card img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.card-content {
+	padding: 1rem;
+}
+
+button {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #5A4DBA; /* hover 시 더 어두운 보라색 */
+}
+
+footer {
+	text-align: center;
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
+</style>
 </head>
 <body>
+
+	<header>
+		<div
+			style="display: flex; justify-content: space-between; align-items: center;">
+			<div>
+				<h1>PetitBloom</h1>
+				<p>Post Details</p>
+			</div>
+			<div>
+				<button onclick="location.href='/home'">Home</button>
+				<button onclick="location.href='/profile'">Profile</button>
+				<button onclick="location.href='/logout'">Logout</button>
+			</div>
+		</div>
+	</header>
+
 
 	<!-- 게시글 내용 -->
 	<h1 th:text="${post.title}">Title</h1>

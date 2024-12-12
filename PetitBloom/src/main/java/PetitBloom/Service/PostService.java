@@ -48,4 +48,13 @@ public class PostService {
 		return postDAO.countLikes(postId);
 	}
 
+	public void updateLikeCount(Long postId, boolean increment) {
+	    if (increment) {
+	        postDAO.incrementLikeCount(postId);
+	    } else {
+	        postDAO.decrementLikeCount(postId);
+	    }
+	}
+
+
 }

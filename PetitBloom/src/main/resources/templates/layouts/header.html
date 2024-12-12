@@ -1,0 +1,46 @@
+<div class="header">
+    <a href="/" class="logo">PetitBloom</a>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li th:if="${loggedIn}" th:href="@{'/profile'}"><a>Profile</a></li>
+            <li th:if="${!loggedIn}" th:href="@{'/login'}"><a>Login</a></li>
+            <li th:if="${loggedIn}" th:href="@{'/logout'}"><a>Logout</a></li>
+        </ul>
+    </nav>
+</div>
+<style>
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+</style>

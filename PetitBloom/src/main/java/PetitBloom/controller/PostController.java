@@ -247,5 +247,7 @@ public class PostController {
         return "detail";  //detail.html 페이지로 전달
     }
 
+   
 
+    
 }

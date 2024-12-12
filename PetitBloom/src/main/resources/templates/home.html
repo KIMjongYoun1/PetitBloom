@@ -109,6 +109,8 @@ footer {
 				th:onclick="'window.location.href=\'/profile\''">My Profile</button>
 			<button th:if="${user != null}"
 				th:onclick="'window.location.href=\'/logout\''">Logout</button>
+			<button th:if="${user != null}"
+				th:onclick="'window.location.href=\'/garden\''">Garden</button>
 
 			<!-- 비로그인 상태에서 로그인 버튼 표시 -->
 			<button th:if="${user == null}"
@@ -126,33 +128,7 @@ footer {
 				creations, and grow together!</p>
 		</section>
 
-		<!-- 추천 정원 섹션 -->
-		<section id="featured-gardens" class="section">
-			<h2>Featured Gardens</h2>
-			<div class="cards">
-				<div class="card">
-					<img src="/images/garden1.jpg" alt="Garden 1">
-					<div class="card-content">
-						<h3>Spring Blossoms</h3>
-						<p>A beautiful collection of spring flowers.</p>
-					</div>
-				</div>
-				<div class="card">
-					<img src="/images/garden2.jpg" alt="Garden 2">
-					<div class="card-content">
-						<h3>Urban Oasis</h3>
-						<p>An urban garden designed for relaxation.</p>
-					</div>
-				</div>
-				<div class="card">
-					<img src="/images/garden3.jpg" alt="Garden 3">
-					<div class="card-content">
-						<h3>Succulent Haven</h3>
-						<p>Explore a vibrant collection of succulents.</p>
-					</div>
-				</div>
-			</div>
-		</section>
+
 
 		<!-- 가입 유도 섹션 -->
 		<section id="call-to-action" class="section">

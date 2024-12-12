@@ -26,8 +26,11 @@ public interface PostDAO {
     
     // 특정 게시글의 좋아요 개수 조회
     Long countLikes(Long postId);
+    
+    void incrementLikeCount(Long postId); // 좋아요 수 증가
+    void decrementLikeCount(Long postId); // 좋아요 수 감소
 
-
+    
 
     
 }

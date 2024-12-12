@@ -59,7 +59,8 @@ public class GardenController {
 		}
 
 		gardenService.addLike(userId, id); // 좋아요 추가
-
+		postService.updateLikeCount(id, true); // 좋아요 수 증가
+		
 		response.put("status", "success");
 		return ResponseEntity.ok(response);
 	}
@@ -84,7 +85,8 @@ public class GardenController {
 		}
 
 		gardenService.removeLike(userId, id); // 좋아요 삭제
-
+		postService.updateLikeCount(id, false); // 좋아요 수 감소
+		
 		response.put("status", "success");
 		return ResponseEntity.ok(response);
 	}

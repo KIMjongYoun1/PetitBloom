@@ -3,59 +3,88 @@
 
 <mapper namespace="PetitBloom.mapper.PostDAO">
 
-    <!-- 게시글 ID로 게시글 조회 -->
-    <select id="findPostById" resultType="PetitBloom.bean.PostVO">
-        SELECT
-            id AS id,
-            user_id AS userId,
-            title AS title,
-            content AS content,
-            image_url AS imageUrl,
-            thumbnail AS thumbnail,
-            created_at AS createdAt,
-            updated_at AS updatedAt,
-            like_count AS likeCount
-        FROM posts
-        WHERE id = #{id}
-    </select>
+	<!-- 게시글 ID로 게시글 조회 -->
+	<select id="findPostById" resultType="PetitBloom.bean.PostVO">
+		SELECT
+		id AS id,
+		user_id AS
+		userId,
+		title AS title,
+		content AS content,
+		image_url AS imageUrl,
+		thumbnail AS thumbnail,
+		created_at AS createdAt,
+		updated_at AS
+		updatedAt,
+		like_count AS likeCount
+		FROM posts
+		WHERE id = #{id}
+	</select>
 
-    <!-- 사용자 ID로 게시글 목록을 조회 -->
-    <select id="findPostsByUserId" resultType="PetitBloom.bean.PostVO">
-        SELECT
-            id AS id,
-            user_id AS userId,
-            title AS title,
-            content AS content,
-            image_url AS imageUrl,
-            thumbnail AS thumbnail,
-            created_at AS createdAt,
-            updated_at AS updatedAt,
-            like_count AS likeCount
-        FROM posts
-        WHERE user_id = #{userId}
-    </select>
+	<!-- 사용자 ID로 게시글 목록을 조회 -->
+	<select id="findPostsByUserId"
+		resultType="PetitBloom.bean.PostVO">
+		SELECT
+		id AS id,
+		user_id AS userId,
+		title AS title,
+		content AS
+		content,
+		image_url AS imageUrl,
+		thumbnail AS thumbnail,
+		created_at AS
+		createdAt,
+		updated_at AS updatedAt,
+		like_count AS likeCount
+		FROM posts
+		WHERE user_id = #{userId}
+	</select>
 
-    <!-- 게시글 저장 -->
-    <insert id="savePost" parameterType="PetitBloom.bean.PostVO">
-        INSERT INTO posts (user_id, title, content, image_url, thumbnail, created_at, updated_at, like_count)
-        VALUES (#{userId}, #{title}, #{content}, #{imageUrl}, #{thumbnail}, #{createdAt}, #{updatedAt}, 0)
-    </insert>
+	<!-- 게시글 저장 -->
+	<insert id="savePost" parameterType="PetitBloom.bean.PostVO">
+		INSERT INTO posts (user_id,
+		title, content, image_url, thumbnail,
+		created_at, updated_at,
+		like_count)
+		VALUES (#{userId}, #{title}, #{content}, #{imageUrl},
+		#{thumbnail},
+		#{createdAt}, #{updatedAt}, 0)
+	</insert>
 
-    <!-- 게시글 수정 -->
-    <update id="updatePost" parameterType="PetitBloom.bean.PostVO">
-        UPDATE posts
-        SET title = #{title},
-            content = #{content},
-            image_url = #{imageUrl},
-            thumbnail = #{thumbnail},
-            updated_at = #{updatedAt}
-        WHERE id = #{id}
-    </update>
+	<!-- 게시글 수정 -->
+	<update id="updatePost" parameterType="PetitBloom.bean.PostVO">
+		UPDATE posts
+		SET title =
+		#{title},
+		content = #{content},
+		image_url = #{imageUrl},
+		thumbnail =
+		#{thumbnail},
+		updated_at = #{updatedAt}
+		WHERE id = #{id}
+	</update>
 
-    <!-- 게시글 삭제 -->
-    <delete id="deletePost" parameterType="Long">
-        DELETE FROM posts
-        WHERE id = #{id}
-    </delete>
+	<!-- 게시글 삭제 -->
+	<delete id="deletePost" parameterType="Long">
+		DELETE FROM posts
+		WHERE id
+		= #{id}
+	</delete>
+
+	<!-- 좋아요 증가 -->
+	<update id="incrementLikeCount" parameterType="Long">
+		UPDATE posts
+		SET like_count = like_count + 1
+		WHERE id = #{postId}
+	</update>
+
+	<!-- 좋아요 감소 -->
+	<update id="decrementLikeCount" parameterType="Long">
+		UPDATE posts
+		SET like_count = like_count - 1
+		WHERE id = #{postId}
+	</update>
+
+
 
 </mapper>

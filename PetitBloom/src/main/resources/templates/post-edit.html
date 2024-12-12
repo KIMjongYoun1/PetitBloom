@@ -6,8 +6,98 @@
     <title>Edit Post</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
  
+ <style>
+/* General styles */
+:root {
+	--primary-color: #6A5ACD; /* 보라색 (배너 색상) */
+	--secondary-color: #FFFFFF; /* 흰색 (텍스트, 버튼 배경) */
+	--text-color: #333333; /* 텍스트 색상 */
+	--background-color: #F9F9F9; /* 페이지 배경색 */
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+header {
+	background-color: var(--primary-color); /* 배너 배경색 보라색 */
+	color: var(--secondary-color);
+	padding: 2rem;
+	text-align: center;
+}
+
+header h1 {
+	font-size: 3rem;
+	margin: 0;
+}
+
+header p {
+	font-size: 1.2rem;
+	margin-top: 0.5rem;
+}
+
+main {
+	padding: 2rem;
+}
+
+.section {
+	margin-bottom: 3rem;
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.card {
+	background: var(--secondary-color);
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.card img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.card-content {
+	padding: 1rem;
+}
+
+button {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #5A4DBA; /* hover 시 더 어두운 보라색 */
+}
+
+footer {
+	text-align: center;
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
+</style>
+ 
 </head>
 <body>
+
+	<Header>Edit Your Post</Header>
+	
     <h1>Edit Post</h1>
 
     <!-- 게시글 수정 폼 -->
@@ -92,5 +182,9 @@
             });
         });
     </script>
+    
+    	<footer>
+		<p>© 2024 PetitBloom. All Rights Reserved.</p>
+	</footer>
 </body>
 </html>

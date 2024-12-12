@@ -7,37 +7,124 @@
 	crossorigin="anonymous"></script>
 
 <style>
-
-.button-link {
-	text-decoration: none;
-	padding: 10px 20px;
-	background-color: #4CAF50;
-	color: white;
-	border-radius: 5px;
-	display: inline-block;
+/* General styles */
+:root {
+	--primary-color: #6A5ACD; /* 보라색 (배너 색상) */
+	--secondary-color: #FFFFFF; /* 흰색 (텍스트, 버튼 배경) */
+	--text-color: #333333; /* 텍스트 색상 */
+	--background-color: #F9F9F9; /* 페이지 배경색 */
 }
 
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+header {
+	background-color: var(--primary-color); /* 배너 배경색 보라색 */
+	color: var(--secondary-color);
+	padding: 2rem;
+	text-align: center;
+}
+
+header h1 {
+	font-size: 3rem;
+	margin: 0;
+}
+
+header p {
+	font-size: 1.2rem;
+	margin-top: 0.5rem;
+}
+
+main {
+	padding: 2rem;
+}
+
+.section {
+	margin-bottom: 3rem;
+}
+
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.card {
+	background: var(--secondary-color);
+	border-radius: 10px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.card img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.card-content {
+	padding: 1rem;
+}
+
+button {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #5A4DBA; /* hover 시 더 어두운 보라색 */
+}
+
+footer {
+	text-align: center;
+	padding: 1rem;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
 </style>
 
 <meta charset="UTF-8">
 <title>회원가입</title>
 </head>
 <body>
-	  <h1>회원가입</h1>
-    <form action="/signup" method="post">
-    	<label for="id">I   D:</label>
-        <input type="text" id="id" name="id" required><br>
-    
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+	<header>
+		<div>
+			<h1>Sign Up</h1>
+			<div>
+				<button onclick="location.href='/home'">Home</button>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+			</div>
+		</div>
+	</header>
+	<br><br><br>
 
-        <button type="submit">회원가입</button><!-- 수정된 홈 버튼 -->
-		<a href="/home" class="button-link">Home</a>
+	<form action="/signup" method="post">
+		<label for="userId">I D:</label> <input type="text" id="userId"
+			name="userId" required><br> <label for="username">Username:</label>
+		<input type="text" id="username" name="username" required><br>
+
+		<label for="email">Email:</label> <input type="email" id="email"
+			name="email" required><br> <label for="password">Password:</label>
+		<input type="password" id="password" name="password" required><br>
+
+		<button type="submit">회원가입</button>
+		<!-- 수정된 홈 버튼 -->
+		<button><a href="/home">Home</a></button>
+		<br><br><br>
+		
+		<footer>
+			<p>© 2024 PetitBloom. All Rights Reserved.</p>
+		</footer>
 </body>
 </html>
