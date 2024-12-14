@@ -27,11 +27,6 @@ public class CommentService {
 		commentDAO.insertComment(comment);
 	}
 
-	// 댓글 삭제
-	public boolean deleteComment(Long id) {
-		return commentDAO.deleteComment(id) > 0;
-	}
-
 
 
 }

@@ -3,28 +3,27 @@
 
 <mapper namespace="PetitBloom.mapper.CommentDAO">
 
-    <!-- 특정 게시글의 댓글 목록 가져오기 -->
-    <select id="findCommentsByPostId" resultType="PetitBloom.bean.CommentVO">
-        SELECT 
-            id,
-            post_id AS postId,
-            user_id AS userId,
-            content,
-            created_at AS createdAt
-        FROM comments
-        WHERE post_id = #{postId}
-        ORDER BY created_at ASC
-    </select>
+	<!-- 특정 게시글의 댓글 목록 가져오기 -->
+	<select id="findCommentsByPostId"
+		resultType="PetitBloom.bean.CommentVO">
+		SELECT
+		id,
+		post_id AS postId,
+		user_id AS userId,
+		content,
+		created_at AS createdAt
+		FROM comments
+		WHERE post_id = #{postId}
+		ORDER BY created_at ASC
+	</select>
 
-    <!-- 댓글 추가 -->
-    <insert id="insertComment" parameterType="PetitBloom.bean.CommentVO">
-        INSERT INTO comments (post_id, user_id, content, created_at)
-        VALUES (#{postId}, #{userId}, #{content}, NOW())
-    </insert>
+	<!-- 댓글 추가 -->
+	<insert id="insertComment"
+		parameterType="PetitBloom.bean.CommentVO">
+		INSERT INTO comments (post_id, user_id, content, created_at)
+		VALUES (#{postId}, #{userId}, #{content}, NOW())
+	</insert>
 
-    <!-- 댓글 삭제 -->
-    <delete id="deleteComment" parameterType="Long">
-        DELETE FROM comments WHERE id = #{id}
-    </delete>
+
 
 </mapper>
