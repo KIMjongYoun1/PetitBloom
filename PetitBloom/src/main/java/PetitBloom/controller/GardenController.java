@@ -65,31 +65,7 @@ public class GardenController {
 		return ResponseEntity.ok(response);
 	}
 
-	// 좋아요 삭제
-	@PostMapping("/garden/{id}/unlike")
-	public ResponseEntity<Map<String, String>> removeLike(@PathVariable Long id, HttpSession session) {
-		Map<String, String> response = new HashMap<>();
-		String userId = SessionUtils.getLoggedInUserId(session);
 
-		if (userId == null) {
-			response.put("status", "error");
-			response.put("message", "로그인이 필요합니다.");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-		}
-
-		// 좋아요가 존재하지 않으면 삭제할 수 없으므로 확인
-		if (!gardenService.checkLike(userId, id)) {
-			response.put("status", "error");
-			response.put("message", "좋아요를 하지 않았습니다.");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		}
-
-		gardenService.removeLike(userId, id); // 좋아요 삭제
-		postService.updateLikeCount(id, false); // 좋아요 수 감소
-		
-		response.put("status", "success");
-		return ResponseEntity.ok(response);
-	}
 
 	// 좋아요 상태 확인
 	@GetMapping("/garden/{id}/checkLike")
