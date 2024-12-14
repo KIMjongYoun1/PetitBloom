@@ -1,167 +1,229 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetitBloom</title>
+<title>PetitBloom - Post Details</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
+
 /* General styles */
 :root {
-	--primary-color: #6A5ACD; /* 보라색 (배너 색상) */
-	--secondary-color: #FFFFFF; /* 흰색 (텍스트, 버튼 배경) */
-	--text-color: #333333; /* 텍스트 색상 */
-	--background-color: #F9F9F9; /* 페이지 배경색 */
+	--background-color: #F5F8F3; /* 부드러운 녹색빛 */
+	--header-footer-color: #3A6351; /* 짙은 그린 */
+	--primary-color: #6A994E; /* 밝은 초록색 */
+	--secondary-color: #FFFFFF; /* 흰색 */
+	--text-color: #2D2D2D; /* 차분한 다크 그레이 */
+	--button-color: #FFB400; /* 밝은 노란색 */
+	--button-hover-color: #D99200; /* 버튼 Hover */
+	--card-shadow-color: rgba(0, 0, 0, 0.1); /* 카드 그림자 색상 */
 }
 
 body {
+	background-color: var(--background-color);
+	color: var(--text-color);
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: var(--background-color);
-	color: var(--text-color);
 }
 
+/* 헤더 */
 header {
-	background-color: var(--primary-color); /* 배너 배경색 보라색 */
+	background-color: var(--header-footer-color);
 	color: var(--secondary-color);
-	padding: 2rem;
+	padding: 1.5rem 2rem;
 	text-align: center;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
 header h1 {
-	font-size: 3rem;
 	margin: 0;
+	font-size: 2.5rem;
+	font-weight: bold;
 }
 
 header p {
+	margin: 0.5rem 0 0;
 	font-size: 1.2rem;
-	margin-top: 0.5rem;
 }
 
-main {
-	padding: 2rem;
+header .nav-buttons {
+	margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
 }
 
-.section {
-	margin-bottom: 3rem;
+header .nav-buttons button {
+	background-color: var(--button-color);
+	color: var(--secondary-color);
+	border: none;
+	padding: 0.8rem 1.2rem;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s ease;
 }
 
-.cards {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	gap: 20px;
+header .nav-buttons button:hover {
+	background-color: var(--button-hover-color);
 }
 
-.card {
-	background: var(--secondary-color);
+/* 컨테이너 */
+.container {
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 1.5rem;
+	background-color: var(--secondary-color);
 	border-radius: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
 }
 
-.card img {
+/* 게시글 스타일 */
+.post-thumbnail {
 	width: 100%;
-	height: 200px;
-	object-fit: cover;
+	height: auto;
+	border-radius: 10px;
+	margin-bottom: 1rem;
 }
 
-.card-content {
-	padding: 1rem;
+.post-details {
+	text-align: left;
+	margin-bottom: 1rem;
 }
 
+.post-details h1 {
+	font-size: 2rem;
+	color: var(--primary-color);
+}
+
+.post-details p {
+	margin: 0.5rem 0;
+	color: var(--text-color);
+}
+
+.post-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+/* 버튼 스타일 */
 button {
-	background-color: var(--primary-color);
+	background-color: var(--button-color);
 	color: var(--secondary-color);
 	border: none;
 	padding: 0.8rem 1.5rem;
 	font-size: 1rem;
 	cursor: pointer;
 	border-radius: 5px;
+	transition: background-color 0.3s ease;
 }
 
 button:hover {
-	background-color: #5A4DBA; /* hover 시 더 어두운 보라색 */
+	background-color: var(--button-hover-color);
 }
 
+/* 댓글 섹션 */
+.comment-section {
+	margin-top: 2rem;
+}
+
+.comment-section ul {
+	list-style: none;
+	padding: 0;
+}
+
+.comment-section li {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid #ddd;
+}
+
+.comment-section strong {
+	color: var(--primary-color);
+}
+
+/* 푸터 */
 footer {
 	text-align: center;
 	padding: 1rem;
-	background-color: var(--primary-color);
+	background-color: var(--header-footer-color);
 	color: var(--secondary-color);
+	margin-top: 2rem;
+	font-size: 0.9rem;
 }
 </style>
+
 </head>
 <body>
 
 	<header>
-		<div
-			style="display: flex; justify-content: space-between; align-items: center;">
-			<div>
-				<h1>PetitBloom</h1>
-				<p>Post Details</p>
-			</div>
-			<div>
-				<button onclick="location.href='/home'">Home</button>
-				<button onclick="location.href='/profile'">Profile</button>
-				<button onclick="location.href='/logout'">Logout</button>
-			</div>
+		<h1>PetitBloom</h1>
+		<p>Post Details</p>
+		<div class="nav-buttons">
+			<button onclick="location.href='/home'">Home</button>
+			<button onclick="location.href='/garden'">Garden</button>
+			<button onclick="location.href='/profile'">Profile</button>
 		</div>
 	</header>
 
+	<div class="container">
+		<!-- 썸네일 -->
+		<img class="post-thumbnail" th:src="${post.thumbnail}" alt="Post Thumbnail">
 
-	<!-- 게시글 내용 -->
-	<h1 th:text="${post.title}">Title</h1>
-	<p th:text="${post.content}">Content</p>
+		<!-- 게시글 내용 -->
+		<div class="post-details">
+			<h1 th:text="${post.title}">Post Title</h1>
+			<p th:text="${post.content}">Post Content</p>
+			<p>
+				Written by: <span th:text="${post.userId}">User</span>
+			</p>
+			<p>
+				Created at: <span th:text="${post.createdAt}">Date</span>
+			</p>
+		</div>
 
-	<!-- 작성자 및 날짜 -->
-	<p>
-		Written by: <span th:text="${post.userId}">User</span>
-	</p>
-	<p>
-		Created at: <span th:text="${post.createdAt}">Date</span>
-	</p>
+		<!-- 좋아요 및 버튼 -->
+		<div class="post-actions">
+			<div>
+				Likes: <strong th:text="${post.likeCount}">0</strong>
+			</div>
+			<div th:if="${isAuthor}">
+				<a th:href="@{'/post/' + ${post.id} + '/edit'}"><button>Edit</button></a>
+				<form th:action="@{'/post/' + ${post.id} + '/delete'}" method="post" style="display: inline;">
+					<button type="submit">Delete</button>
+				</form>
+			</div>
+		</div>
 
-	<!-- 썸네일 -->
-	<img th:src="${post.thumbnail}" alt="Post Thumbnail"
-		style="width: 300px; height: 300px;">
-
-	<!-- 좋아요 표시 -->
-	<p>
-		Likes: <span th:text="${post.likeCount}">0</span>
-	</p>
-
-	<!-- 수정, 삭제 버튼 (작성자만 보이도록 설정) -->
-	<div th:if="${isAuthor}">
-		<a th:href="@{'/post/' + ${post.id} + '/edit'}"><button>Edit</button></a>
-		<form th:action="@{'/post/' + ${post.id} + '/delete'}" method="post"
-			style="display: inline;">
-			<button type="submit">Delete</button>
-		</form>
+		<!-- 댓글 섹션 -->
+		<div class="comment-section">
+			<h3>Comments</h3>
+			<ul>
+				<li th:each="comment : ${comments}">
+					<strong th:text="${comment.userId}">User</strong>: <span th:text="${comment.content}">Comment Content</span>
+				</li>
+			</ul>
+			<h4>Write a Comment</h4>
+			<form th:action="@{'/post/' + ${post.id} + '/comments'}" method="post">
+				<textarea name="content" placeholder="Write your comment..." required
+					style="width: 100%; height: 100px; border: 1px solid #ccc; border-radius: 5px; padding: 0.5rem; margin-bottom: 1rem;"></textarea>
+				<button type="submit">Post Comment</button>
+			</form>
+		</div>
 	</div>
 
-	<!-- 뒤로가기 버튼 -->
-	<a href="/profile"><button>Back to Profile</button></a>
-	<a href="/garden"><button>Back to Garden</button></a>
-
-	<h2>Comments</h2>
-	<ul>
-		<li th:each="comment : ${comments}"><strong
-			th:text="${comment.userId}">User</strong>: <span
-			th:text="${comment.content}">Comment Content</span></li>
-	</ul>
-
-	<!-- 댓글 작성 폼 -->
-	<h3>Write a Comment</h3>
-	<form th:action="@{'/post/' + ${post.id} + '/comments'}" method="post">
-		<textarea name="content" placeholder="Write your comment..." required></textarea>
-		<button type="submit">Post Comment</button>
-	</form>
-
-
-
+	<footer>
+		<p>© 2024 PetitBloom. All Rights Reserved.</p>
+	</footer>
 </body>
 </html>

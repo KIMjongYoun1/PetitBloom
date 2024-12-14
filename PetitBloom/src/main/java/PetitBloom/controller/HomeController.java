@@ -13,34 +13,28 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class HomeController {
-	
+
 	private PostService postService;
-	
-	 public HomeController(PostService postService) {
-	        this.postService = postService;
-	    }
-	
-    @GetMapping("/")
-    public String landingPage() {
-        return "landing"; // landing.html 페이지 반환
-    }
-    
-    @GetMapping("/home")
-    public String home(HttpSession session, Model model) {
-        ProfileVO user = SessionUtils.getLoggedInUser(session);
 
-        if (user != null) {
-            model.addAttribute("user", user);
-        }
-        
-    
+	public HomeController(PostService postService) {
+		this.postService = postService;
+	}
 
-        return "home"; // home.html
-        
-       
-    }
+	@GetMapping("/")
+	public String landingPage() {
+		return "landing"; // landing.html 페이지 반환
+	}
 
-  
+	@GetMapping("/home")
+	public String home(HttpSession session, Model model) {
+		ProfileVO user = SessionUtils.getLoggedInUser(session);
 
-  
+		if (user != null) {
+			model.addAttribute("user", user);
+		}
+
+		return "home"; // home.html
+
+	}
+
 }

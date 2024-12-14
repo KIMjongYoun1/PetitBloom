@@ -5,33 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Garden</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 /* General styles */
 :root {
-	--primary-color: #6A5ACD; /* 보라색 */
-	--secondary-color: #FFFFFF; /* 흰색 */
-	--text-color: #333333; /* 텍스트 색상 */
-	--background-color: #F9F9F9; /* 배경색 */
+    --background-color: #F5F8F3; /* 부드러운 녹색빛 */
+    --header-footer-color: #3A6351; /* 짙은 그린 */
+    --primary-color: #6A994E; /* 밝은 초록색 */
+    --secondary-color: #FFFFFF; /* 흰색 */
+    --text-color: #2D2D2D; /* 차분한 다크 그레이 */
+    --button-color: #FFB400; /* 밝은 노란색 */
+    --button-hover-color: #D99200; /* 버튼 Hover */
+    --card-shadow-color: rgba(0, 0, 0, 0.1); /* 카드 그림자 색상 */
 }
 
 body {
+	background-color: var(--background-color);
+	color: var(--text-color);
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	background-color: var(--background-color);
-	color: var(--text-color);
 }
 
 header {
-	background-color: var(--primary-color);
+	background-color: var(--header-footer-color);
 	color: var(--secondary-color);
 	padding: 1.5rem;
 	text-align: center;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
@@ -46,18 +51,30 @@ header p {
 
 .container {
 	padding: 2rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
 }
 
 .card {
 	background: var(--secondary-color);
 	border-radius: 10px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 4px 6px var(--card-shadow-color);
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	height: 350px;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card img {
-	width: 100%;
-	height: 200px;
-	object-fit: cover;
+	width: 100% !important;
+	height: 200px !important;
+	object-fit: cover !important;
 	border-radius: 10px 10px 0 0;
 }
 
@@ -78,17 +95,20 @@ header p {
 }
 
 button {
-	background-color: var(--primary-color);
+	background-color: var(--button-color);
 	color: var(--secondary-color);
 	border: none;
 	padding: 0.8rem 1.5rem;
 	font-size: 1rem;
+	font-weight: bold;
 	cursor: pointer;
 	border-radius: 5px;
+	transition: all 0.3s ease;
 }
 
 button:hover {
-	background-color: #5A4DBA; /* hover 시 더 어두운 보라색 */
+	background-color: var(--button-hover-color);
+	transform: scale(1.05);
 }
 
 .like-button {
@@ -107,108 +127,104 @@ button:hover {
 footer {
 	text-align: center;
 	padding: 1rem;
-	background-color: var(--primary-color);
+	background-color: var(--header-footer-color);
 	color: var(--secondary-color);
+	margin-top: 2rem;
 }
 </style>
 </head>
 <body>
 
-	<header>
-		<div
-			style="display: flex; justify-content: space-between; align-items: center;">
-			<div>
-				<h1>Digital Garden</h1>
-
-			</div>
-			<div>
-				<button onclick="location.href='/home'">Home</button>
-				<button onclick="location.href='/profile'">Profile</button>
-				<button onclick="location.href='/logout'">Logout</button>
-			</div>
+<header>
+	<div
+		style="display: flex; justify-content: space-between; align-items: center;">
+		<div>
+			<h1>Digital Garden</h1>
 		</div>
-	</header>
-
-
-
-
-	<div class="container mt-4">
-		<div id="garden-posts" class="row">
-			<!-- 게시글 목록이 동적으로 생성됩니다 -->
+		<div>
+			<button onclick="location.href='/home'">Home</button>
+			<button onclick="location.href='/profile'">Profile</button>
+			<button onclick="location.href='/logout'">Logout</button>
 		</div>
 	</div>
+</header>
 
-	<footer>
-		<p>© 2024 PetitBloom. All Rights Reserved.</p>
-	</footer>
+<div class="container mt-4">
+	<div id="garden-posts" class="row">
+		<!-- 게시글 목록이 동적으로 생성됩니다 -->
+	</div>
+</div>
 
-	<script>
-        $(document).ready(function () {
-            // 게시글 목록 가져오기
-            $.ajax({
-                type: "GET",
-                url: "/garden/posts",
-                success: function (posts) {
-                    const postContainer = $("#garden-posts");
-                    postContainer.empty();
+<footer>
+	<p>© 2024 PetitBloom. All Rights Reserved.</p>
+</footer>
 
-                    posts.forEach(post => {
-                        const likedClass = post.likedByUser ? "btn-danger" : "btn-outline-danger";
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/garden/posts",
+            success: function (posts) {
+                const postContainer = $("#garden-posts");
+                postContainer.empty();
 
-                        const postHtml = `
-                            <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <a href="/garden/${post.id}">
-                                        <img src="${post.thumbnail}" class="card-img-top" alt="${post.title}">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title">${post.title}</h5>
-                                        <p class="card-text">${post.content}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <button class="btn ${likedClass} like-button" data-post-id="${post.id}">
-                                                <i class="fa fa-heart"></i> Like
-                                            </button>
-                                            <span class="like-count">${post.likeCount} Likes</span>
-                                        </div>
+                posts.forEach(post => {
+                    const likedClass = post.likedByUser ? "btn-danger" : "btn-outline-danger";
+
+                    const postHtml = `
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <a href="/garden/${post.id}">
+                                    <img src="${post.thumbnail}" class="card-img-top" alt="${post.title}">
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">${post.title}</h5>
+                                    <p class="card-text">${post.content}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="btn ${likedClass} like-button" data-post-id="${post.id}">
+                                            <i class="fa fa-heart"></i> Like
+                                        </button>
+                                        <span class="like-count">${post.likeCount} Likes</span>
                                     </div>
                                 </div>
                             </div>
-                        `;
-                        postContainer.append(postHtml);
-                    });
+                        </div>
+                    `;
+                    postContainer.append(postHtml);
+                });
 
-                    $(".like-button").click(function () {
-                        const button = $(this);
-                        const postId = button.data("post-id");
-                        const action = button.hasClass("btn-danger") ? "unlike" : "like";
+                $(".like-button").click(function () {
+                    const button = $(this);
+                    const postId = button.data("post-id");
+                    const action = button.hasClass("btn-danger") ? "unlike" : "like";
 
-                        $.ajax({
-                            type: "POST",
-                            url: `/garden/${postId}/${action}`,
-                            success: function () {
-                                const likeCountSpan = button.siblings(".like-count");
-                                let likeCount = parseInt(likeCountSpan.text());
+                    $.ajax({
+                        type: "POST",
+                        url: `/garden/${postId}/${action}`,
+                        success: function () {
+                            const likeCountSpan = button.siblings(".like-count");
+                            let likeCount = parseInt(likeCountSpan.text());
 
-                                if (action === "like") {
-                                    button.removeClass("btn-outline-danger").addClass("btn-danger");
-                                    likeCount++;
-                                } else {
-                                    button.removeClass("btn-danger").addClass("btn-outline-danger");
-                                    likeCount--;
-                                }
-                                likeCountSpan.text(`${likeCount} Likes`);
-                            },
-                            error: function () {
-                                alert("An error occurred while processing the request.");
+                            if (action === "like") {
+                                button.removeClass("btn-outline-danger").addClass("btn-danger");
+                                likeCount++;
+                            } else {
+                                button.removeClass("btn-danger").addClass("btn-outline-danger");
+                                likeCount--;
                             }
-                        });
+                            likeCountSpan.text(`${likeCount} Likes`);
+                        },
+                        error: function () {
+                            alert("An error occurred while processing the request.");
+                        }
                     });
-                },
-                error: function () {
-                    alert("Failed to load posts. Please try again later.");
-                }
-            });
+                });
+            },
+            error: function () {
+                alert("Failed to load posts. Please try again later.");
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
