@@ -178,7 +178,8 @@ footer {
 
 	<div class="container">
 		<!-- 썸네일 -->
-		<img class="post-thumbnail" th:src="${post.thumbnail}" alt="Post Thumbnail">
+		<img class="post-thumbnail" th:src="${post.thumbnail}"
+			alt="Post Thumbnail">
 
 		<!-- 게시글 내용 -->
 		<div class="post-details">
@@ -195,11 +196,16 @@ footer {
 		<!-- 좋아요 및 버튼 -->
 		<div class="post-actions">
 			<div>
-				Likes: <strong th:text="${post.likeCount}">0</strong>
+				Likes: <strong id="like-count" th:text="${post.likeCount}">0</strong>
+			</div>
+			<div>
+				<!-- 좋아요 버튼 추가 -->
+				<button id="like-button" class="btn btn-outline-primary">Like</button>
 			</div>
 			<div th:if="${isAuthor}">
 				<a th:href="@{'/post/' + ${post.id} + '/edit'}"><button>Edit</button></a>
-				<form th:action="@{'/post/' + ${post.id} + '/delete'}" method="post" style="display: inline;">
+				<form th:action="@{'/post/' + ${post.id} + '/delete'}" method="post"
+					style="display: inline;">
 					<button type="submit">Delete</button>
 				</form>
 			</div>
@@ -209,13 +215,15 @@ footer {
 		<div class="comment-section">
 			<h3>Comments</h3>
 			<ul>
-				<li th:each="comment : ${comments}">
-					<strong th:text="${comment.userId}">User</strong>: <span th:text="${comment.content}">Comment Content</span>
-				</li>
+				<li th:each="comment : ${comments}"><strong
+					th:text="${comment.userId}">User</strong>: <span
+					th:text="${comment.content}">Comment Content</span></li>
 			</ul>
 			<h4>Write a Comment</h4>
-			<form th:action="@{'/post/' + ${post.id} + '/comments'}" method="post">
-				<textarea name="content" placeholder="Write your comment..." required
+			<form th:action="@{'/post/' + ${post.id} + '/comments'}"
+				method="post">
+				<textarea name="content" placeholder="Write your comment..."
+					required
 					style="width: 100%; height: 100px; border: 1px solid #ccc; border-radius: 5px; padding: 0.5rem; margin-bottom: 1rem;"></textarea>
 				<button type="submit">Post Comment</button>
 			</form>
@@ -226,4 +234,34 @@ footer {
 		<p>© 2024 PetitBloom. All Rights Reserved.</p>
 	</footer>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const likeButton = document.getElementById("like-button");
+        const likeCountElement = document.getElementById("like-count");
+        const postId = /* 게시글 ID 가져오기 (예: ${post.id}) */;
+
+        // 좋아요 버튼 클릭 이벤트
+        likeButton.addEventListener("click", function () {
+            fetch(`/garden/${postId}/like`, { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        // 좋아요 수 증가
+                        const currentCount = parseInt(likeCountElement.textContent);
+                        likeCountElement.textContent = currentCount + 1;
+
+                        // 버튼 스타일 업데이트
+                        likeButton.textContent = "Liked";
+                        likeButton.disabled = true; // 좋아요 중복 방지
+                    } else {
+                        alert(data.message || "An error occurred.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
+    });
+</script>
+
+
 </html>
